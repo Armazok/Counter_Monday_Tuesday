@@ -1,0 +1,55 @@
+.setting {
+    padding: 10px;
+    border: 2px solid #8bddf9;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-right: 70px;
+}
+
+.wrapper {
+    border: 2px solid #8bddf9;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.buttonWrapper {
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    border: 2px solid #8bddf9;
+}
+
+.textSetting {
+    margin: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pText {
+    color: #8bddf9;
+    font-weight: 700;
+}
+
+.input {
+    border-radius: 5px;
+    border: 2px solid #8bddf9;
+    text-align: center;
+    height: 100%;
+    width: 47%;
+}
+
+.setButton {
+    background-color: #8bddf9;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    margin: 10px 20px;
+    text-transform: uppercase;
+}
+

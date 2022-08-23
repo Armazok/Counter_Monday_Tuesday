@@ -1,18 +1,17 @@
 import React, {useState} from 'react';
 import {MultiButton} from "./MultiButton";
-import s from "./Button.module.css"
+import s from "./CounterButton.module.css"
 
 
 export const Counter = () => {
     const [counter, setCounter] = useState<number>(0)
 
-    /* const disableStyle = counter >= 5 || counter <= 0 ? "s.incButton" : ""
-    * styleButton={disableStyle}
-    * */
-
     const counterStyle = {
         color: counter >= 5 ? "red" : ""
     }
+
+
+
     const disableInc = () => counter >= 5
     const disableReset = () => counter <= 0
 

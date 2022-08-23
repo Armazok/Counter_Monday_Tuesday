@@ -7,9 +7,12 @@ type MultiButtonType = {
     styleButton?: string
 }
 
-   /* ? styleButton : ""*/
-
-export const MultiButton:React.FC<MultiButtonType> = ({name, callback, disable, styleButton}) => {
+export const MultiButton: React.FC<MultiButtonType> = ({
+                                                           name,
+                                                           callback,
+                                                           disable,
+                                                           styleButton
+                                                       }) => {
     const callBackFunction = () => callback()
     return (
         <div>
