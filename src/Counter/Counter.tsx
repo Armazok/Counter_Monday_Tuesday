@@ -1,32 +1,37 @@
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {MultiButton} from "./MultiButton";
 import s from "./CounterButton.module.css"
 
 
-export const Counter = () => {
-    const [counter, setCounter] = useState<number>(0)
+type CounterType = {
+    counter: number | boolean
+    setCounter: Dispatch<SetStateAction<number>>
+    state: { maxValue: number; minValue: number; }
+}
+
+
+export const Counter = (props: CounterType) => {
+
 
     const counterStyle = {
-        color: counter >= 5 ? "red" : ""
+        color: props.counter >= props.state.maxValue ? "red" : ""
     }
 
-
-
-    const disableInc = () => counter >= 5
-    const disableReset = () => counter <= 0
+    const disableInc = () => props.counter >= props.state.maxValue
+    const disableReset = () => props.counter <= props.state.minValue
 
     const IncButton = () => {
-        if (counter < 5) {
-            setCounter(prev => prev + 1)
+        if (props.counter < props.state.maxValue) {
+            props.setCounter(prev => prev + 1)
         }
     }
     const ResetButton = () => {
-        setCounter(0)
+        props.setCounter(props.state.minValue)
     }
 
     return (
         <div className={s.counter}>
-            <div style={counterStyle} className={s.counterStyle }>{counter}</div>
+            <div style={counterStyle} className={s.counterStyle }>{props.counter}</div>
             <div className={s.buttonWrapper}>
                 <MultiButton styleButton={s.incButton} disable={disableInc()} name="Inc" callback={IncButton}/>
                 <MultiButton styleButton={s.resetButton} disable={disableReset()} name="Reset" callback={ResetButton}/>
