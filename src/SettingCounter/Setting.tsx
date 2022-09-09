@@ -1,6 +1,7 @@
-import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
+import React, {ChangeEvent, Dispatch, SetStateAction} from 'react';
 import {MultiButton} from "../Counter/MultiButton";
 import s from "./Setting.module.css"
+import {EditInput} from "./EditInput";
 
 
 type SettingsType = {
@@ -8,44 +9,50 @@ type SettingsType = {
     minValue: number
     setMaxValue: Dispatch<SetStateAction<number>>
     setMinValue: Dispatch<SetStateAction<number>>
-    saveState: <T>(key: string, state: T) => void
+    setCount: (count:number)=>void
+    error: string
 }
 
-export const Setting = (props:SettingsType) => {
-    const [error, setError] = useState<string>("")
+export const Setting = (props: SettingsType) => {
+
 
     const maxOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-      props.setMaxValue(+e.currentTarget.value)
+        props.setMaxValue(+e.currentTarget.value)
     }
     const minOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setMinValue(+e.currentTarget.value)}
+        props.setMinValue(+e.currentTarget.value)
+    }
 
+    const callBackButton = () => {
+        props.setCount(props.minValue)
+    }
 
     return (
         <div className={s.setting}>
             <div className={s.wrapper}>
-                <div className={s.textSetting}>
-                    <p className={s.pText}>max value:</p>
-                    <input
-                        value={props.maxValue}
-                        onChange={maxOnChange}
-                        className={s.input}
-                        type="number"
-                    />
-                </div>
-                <div className={s.textSetting}>
-                    <p className={s.pText}>start value:</p>
-                    <input
-                        value={props.minValue}
-                        onChange={minOnChange}
-                        className={s.input}
-                        type="number"
-                    />
-                </div>
+                <EditInput
+                    title={"max value:"}
+                    value={props.maxValue}
+                    onChange={maxOnChange}
+                    className={ props.error ? s.errorText : s.input}
+                />
+                <EditInput
+                    title={"start value:"}
+                    value={props.minValue}
+                    onChange={minOnChange}
+                    className={props.error ? s.errorText : s.input}
+                />
             </div>
             <div className={s.buttonWrapper}>
-                <MultiButton styleButton={s.setButton} name={"set"} callback={() => props.saveState("test", {maxValue: props.maxValue, minValue: props.minValue})}/>
+                <MultiButton styleButton={s.setButton} name={"set"} callback={callBackButton} disable={props.minValue < 0 || props.maxValue <= 0 }/>
             </div>
         </div>
     );
 };
+
+
+
+
+
+
+

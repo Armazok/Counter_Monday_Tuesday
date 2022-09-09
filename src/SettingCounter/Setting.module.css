@@ -53,8 +53,8 @@
     text-transform: uppercase;
 }
 
-.error {
+.errorText {
+    border: 1px solid red;
     color: red;
-    background-color: red;
 }
 

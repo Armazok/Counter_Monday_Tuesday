@@ -4,39 +4,41 @@ import {Counter} from "./Counter/Counter";
 import {Setting} from "./SettingCounter/Setting";
 
 function App() {
-    const [maxValue, setMaxValue] = useState<number>(0)
+    const [count, setCount] = useState<number>(0)
+    const [maxValue, setMaxValue] = useState<number>(5)
     const [minValue, setMinValue] = useState<number>(0)
+    const [error, setError] = useState<string>("")
 
     useEffect(() => {
-        if (localStorage.getItem('test')) {
-            setMaxValue(JSON.parse(localStorage.getItem('test')!).maxValue)
-            setMinValue(JSON.parse(localStorage.getItem('test')!).minValue)
+        let startValueAsString = localStorage.getItem('minValue')
+        if (startValueAsString) {
+            setMinValue(JSON.parse(startValueAsString))
+            setCount(JSON.parse(startValueAsString))
         }
-    },[])
+
+        let maxValueAsString = localStorage.getItem('maxValue')
+        maxValueAsString && setMaxValue(JSON.parse(maxValueAsString))
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('minValue', String(minValue))
+        localStorage.setItem('maxValue', String(maxValue))
+    }, [maxValue, minValue])
 
 
-
-    const state = restoreState('test', {maxValue: 0, minValue: 0})
-    const [currentValue, setCurrentValue] = useState<number>(state.minValue)
-
-
-    // вот вам функция для сохранения объектов в память браузера
-    // (данные в этом хранилище сохраняться даже при перезагрузке компа):
-    function saveState<T>(key: string, state: T) {
-        const stateAsString = JSON.stringify(state)
-        localStorage.setItem(key, stateAsString)
-        setCurrentValue(minValue)
-    }
-
-
-    // и вот вам функция для получения сохранённого объекта в памяти браузера:
-    function restoreState<T>(key: string, defaultState: T) {
-        let state = defaultState
-        const stateAsString = localStorage.getItem(key)
-        if (stateAsString !== null) state = JSON.parse(stateAsString) as T
-        return state
-    }
-
+    useEffect(() => {
+        if (maxValue === minValue) {
+            setError("сосать нуль")
+        }
+        if (minValue < 0) {
+            setError("сосать раз")
+        }
+        if (maxValue <= 0) {
+            setError("сосать два")
+        } else {
+            setError("")
+        }
+    }, [maxValue, minValue])
 
 
     return (
@@ -46,12 +48,15 @@ function App() {
                 setMaxValue={setMaxValue}
                 minValue={minValue}
                 setMinValue={setMinValue}
-                saveState={saveState}
+                setCount={setCount}
+                error={error}
             />
             <Counter
-                counter={currentValue}
-                setCounter={setCurrentValue}
-                state={state}
+                counter={count}
+                setCounter={setCount}
+                maxValue={maxValue}
+                minValue={minValue}
+                error={error}
             />
         </div>
     );
