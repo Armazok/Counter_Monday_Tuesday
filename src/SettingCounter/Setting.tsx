@@ -9,7 +9,7 @@ type SettingsType = {
     minValue: number
     setMaxValue: Dispatch<SetStateAction<number>>
     setMinValue: Dispatch<SetStateAction<number>>
-    setCount: (count:number)=>void
+    setCount: (count: number) => void
     error: string
 }
 
@@ -27,6 +27,8 @@ export const Setting = (props: SettingsType) => {
         props.setCount(props.minValue)
     }
 
+    const disable = props.minValue < 0 || props.maxValue <= 0
+
     return (
         <div className={s.setting}>
             <div className={s.wrapper}>
@@ -34,7 +36,7 @@ export const Setting = (props: SettingsType) => {
                     title={"max value:"}
                     value={props.maxValue}
                     onChange={maxOnChange}
-                    className={ props.error ? s.errorText : s.input}
+                    className={props.error ? s.errorText : s.input}
                 />
                 <EditInput
                     title={"start value:"}
@@ -44,7 +46,12 @@ export const Setting = (props: SettingsType) => {
                 />
             </div>
             <div className={s.buttonWrapper}>
-                <MultiButton styleButton={s.setButton} name={"set"} callback={callBackButton} disable={props.minValue < 0 || props.maxValue <= 0 }/>
+                <MultiButton
+                    styleButton={s.setButton}
+                    name={"set"}
+                    callback={callBackButton}
+                    disable={disable}
+                />
             </div>
         </div>
     );

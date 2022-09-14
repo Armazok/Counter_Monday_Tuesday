@@ -14,16 +14,16 @@ type CounterType = {
 
 export const Counter = (props: CounterType) => {
 
-
     const counterStyle = {
-        color: props.counter >= props.maxValue ? "red" : ""
+       color: props.minValue >= props.maxValue ? 'red' : "",
+       // fontSize: props.counter >= props.maxValue ? '15px' : ""
     }
 
     const disableInc = props.counter >= props.maxValue
     const disableReset = props.counter <= props.minValue
 
     const IncButton = () => {
-            props.setCounter( props.counter + 1)
+        props.setCounter(+props.counter + 1)
     }
     const ResetButton = () => {
         props.setCounter(props.minValue)
@@ -31,10 +31,20 @@ export const Counter = (props: CounterType) => {
 
     return (
         <div className={s.counter}>
-            <div style={counterStyle} className={s.counterStyle }>{props.error || props.counter}</div>
+           <div style={counterStyle} className={s.counterStyle}>{props.error || props.counter }</div>
             <div className={s.buttonWrapper}>
-                <MultiButton styleButton={s.incButton} disable={disableInc} name="Inc" callback={IncButton}/>
-                <MultiButton styleButton={s.resetButton} disable={disableReset} name="Reset" callback={ResetButton}/>
+                <MultiButton
+                    styleButton={disableInc ? s.incButtonDesabled : s.incButton}
+                    disable={disableInc}
+                    name="Inc"
+                    callback={IncButton}
+                />
+                <MultiButton
+                    styleButton={disableReset ? s.resetButtonDesabled : s.resetButton}
+                    disable={disableReset}
+                    name="Reset"
+                    callback={ResetButton}
+                />
             </div>
         </div>
     );

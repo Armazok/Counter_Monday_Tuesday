@@ -25,20 +25,15 @@ function App() {
         localStorage.setItem('maxValue', String(maxValue))
     }, [maxValue, minValue])
 
-
     useEffect(() => {
-        if (maxValue === minValue) {
-            setError("сосать нуль")
+        if (minValue < 0 || maxValue <= 0 || maxValue === minValue) {
+            setError("Incorrect value!")
         }
-        if (minValue < 0) {
-            setError("сосать раз")
-        }
-        if (maxValue <= 0) {
-            setError("сосать два")
-        } else {
-            setError("")
+        else {
+            setError('')
         }
     }, [maxValue, minValue])
+
 
 
     return (

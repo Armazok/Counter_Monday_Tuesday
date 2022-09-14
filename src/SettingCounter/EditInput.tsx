@@ -20,7 +20,6 @@ export function EditInput(props: EditInputType) {
                     onChange={props.onChange}
                     className={props.className}
                     type="number"
-                    min={0}
                 />
 
             </div>

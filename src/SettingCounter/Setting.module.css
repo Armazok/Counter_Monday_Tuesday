@@ -45,6 +45,7 @@
 }
 
 .setButton {
+    cursor: pointer;
     background-color: #8bddf9;
     border: none;
     border-radius: 5px;
@@ -53,8 +54,17 @@
     text-transform: uppercase;
 }
 
+.setButtonDesabled {
+    cursor:not-allowed ;
+}
+
 .errorText {
-    border: 1px solid red;
-    color: red;
+    border: 3px solid red;
+
+    outline: none;
+    border-radius: 5px;
+    text-align: center;
+    height: 100%;
+    width: 47%;
 }
 
